@@ -11,8 +11,6 @@ namespace TrueSync
 
         private BVH<BaseCollider> _bvh;
         Dictionary<BaseCollider, BVHNode<BaseCollider>> gameObjectToLeafMap = new Dictionary<BaseCollider, BVHNode<BaseCollider>>();
-        private event Action<BaseCollider> _onPositionOrSizeChanged;
-
         BVH<BaseCollider> IBVHNodeAdapter<BaseCollider>.BVH
         {
             get
