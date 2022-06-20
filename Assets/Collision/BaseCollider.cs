@@ -13,6 +13,9 @@ namespace TrueSync
         public bool enable { get; set; }
         public bool dirty { get; protected set; }
         public object owner { get; set; }
+        public int layer { get; set; }
+        /// <summary>刚体:  两个物体发生碰撞必须其中一个为刚体</summary>
+        public bool rigidBody { get; set; }
 
         public Shape shape { get; protected set; }
 
@@ -40,6 +43,7 @@ namespace TrueSync
             leaveEventCollider = new List<BaseCollider>();
             colliding = new List<BaseCollider>();
             dirty = true;
+            enable = true;
         }
 
         protected abstract AABB GetAABB();
@@ -119,12 +123,12 @@ namespace TrueSync
             return colliding;
         }
 
-        private void CopyList<T>(List<T> source, List<T> targer)
+        private void CopyList<T>(List<T> source, List<T> target)
         {
-            targer.Clear();
+            target.Clear();
             for (int i = 0; i < source.Count; i++)
             {
-                targer.Add(source[i]);
+                target.Add(source[i]);
             }
         }
 

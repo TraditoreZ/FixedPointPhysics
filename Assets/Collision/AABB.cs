@@ -159,5 +159,13 @@ namespace TrueSync
 
             return sqDist;
         }
+
+        public void Encapsulate(AABB aabb)
+        {
+            TSVector min = TSVector.Min(this.min, aabb.min);
+            TSVector max = TSVector.Max(this.max, aabb.max);
+            SetMinMax(min, max);
+        }
+
     }
 }
