@@ -174,7 +174,7 @@ public class TestWord : MonoBehaviour
     {
         if (myWorld != null && myWorld.bvh != null)
         {
-            //myWorld.bvh.RenderDebug();
+            myWorld.bvh.RenderDebug();
         }
     }
 
