@@ -154,6 +154,7 @@ namespace TrueSync
                         if (colliders[i].layer != 0 && colliders[i].layer == PotentialCollision[k].layer)
                             continue;
                         if (colliders[i].owner != PotentialCollision[k].owner && PotentialCollision[k].enable &&
+                         colliders[i].bounds.Intersects(PotentialCollision[k].bounds) &&
                          colliders[i].shape.Intersects(PotentialCollision[k].shape))
                         {
                             ColliderTarget(colliders[i], PotentialCollision[k]);

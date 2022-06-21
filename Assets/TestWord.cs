@@ -130,6 +130,44 @@ public class TestWord : MonoBehaviour
                 Gizmos.DrawWireCube((item.owner as GameObject).transform.position, (item.owner as GameObject).transform.localScale);
             }
         }
+        if (select != null && tempDic.ContainsKey(select))
+        {
+            DrawAABB(tempDic[select]);
+        }
+    }
+
+    void DrawAABB(BaseCollider c)
+    {
+        BoxShape box = c.shape as BoxShape;
+        if (box == null)
+        {
+            return;
+        }
+        OBB obb = box._OBB;
+        TSVector x = obb.AxisX * obb.extents.x;
+        TSVector y = obb.AxisY * obb.extents.y;
+        TSVector z = obb.AxisZ * obb.extents.z;
+
+        TSVector p1 = obb.center + x + y + z;
+        TSVector p2 = obb.center - x + y + z;
+        TSVector p3 = obb.center + x - y + z;
+        TSVector p4 = obb.center + x + y - z;
+        TSVector p5 = obb.center + x - y - z;
+        TSVector p6 = obb.center - x - y + z;
+        TSVector p7 = obb.center - x + y - z;
+        TSVector p8 = obb.center - x - y - z;
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(p1.ToVector3(), 0.1f);
+        Gizmos.DrawWireSphere(p2.ToVector3(), 0.1f);
+        Gizmos.DrawWireSphere(p3.ToVector3(), 0.1f);
+        Gizmos.DrawWireSphere(p4.ToVector3(), 0.1f);
+        Gizmos.DrawWireSphere(p5.ToVector3(), 0.1f);
+        Gizmos.DrawWireSphere(p6.ToVector3(), 0.1f);
+        Gizmos.DrawWireSphere(p7.ToVector3(), 0.1f);
+        Gizmos.DrawWireSphere(p8.ToVector3(), 0.1f);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireCube(c.bounds.center.ToVector3(), c.bounds.size.ToVector3());
     }
 
     void Update()
