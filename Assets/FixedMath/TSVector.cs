@@ -105,7 +105,7 @@ namespace TrueSync
 
         public static TSVector Abs(TSVector other)
         {
-            return new TSVector(FP.Abs(other.x), FP.Abs(other.y), FP.Abs(other.z));
+            return new TSVector(FP.FastAbs(other.x), FP.FastAbs(other.y), FP.FastAbs(other.z));
         }
 
         /// <summary>
