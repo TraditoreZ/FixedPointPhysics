@@ -4,23 +4,16 @@ using UnityEngine;
 
 namespace TrueSync
 {
-    public enum SpaceType
-    {
-        OCtree,
-        BVH
-    }
 
     public class World
     {
         public FP worldSize { get; private set; }
 
-        public SpaceType spaceType { get; private set; }
 
         public List<BaseCollider> colliders;
 
         private List<BaseCollider> needRemove;
 
-        public AABBOctree<BaseCollider> octree { get; set; }
 
         public BVH<BaseCollider> bvh { get; set; }
 
@@ -28,18 +21,14 @@ namespace TrueSync
 
         private List<BVHNode<BaseCollider>> PotentialCollisionBVH;
 
-        public World(FP worldSize, SpaceType spaceType = SpaceType.OCtree)
+        public World(FP worldSize)
         {
             colliders = new List<BaseCollider>(128);
             PotentialCollision = new List<BaseCollider>(128);
             PotentialCollisionBVH = new List<BVHNode<BaseCollider>>(128);
             needRemove = new List<BaseCollider>();
             this.worldSize = worldSize;
-            this.spaceType = spaceType;
-            if (spaceType == SpaceType.OCtree)
-                octree = new AABBOctree<BaseCollider>(worldSize, TSVector.zero, 1, 1.25f);
-            else if (spaceType == SpaceType.BVH)
-                bvh = new BVH<BaseCollider>(new BVHBaseColliderAdapter(), colliders);
+            bvh = new BVH<BaseCollider>(new BVHBaseColliderAdapter(), colliders);
         }
 
 
@@ -51,10 +40,7 @@ namespace TrueSync
                 return false;
             }
             colliders.Add(collider);
-            if (spaceType == SpaceType.OCtree)
-                octree.Add(collider, collider.bounds);
-            else if (spaceType == SpaceType.BVH)
-                bvh.Add(collider);
+            bvh.Add(collider);
             return true;
         }
 
@@ -84,10 +70,7 @@ namespace TrueSync
             for (int i = 0; i < needRemove.Count; i++)
             {
                 colliders.Remove(needRemove[i]);
-                if (spaceType == SpaceType.OCtree)
-                    octree.Remove(needRemove[i]);
-                else if (spaceType == SpaceType.BVH)
-                    bvh.Remove(needRemove[i]);
+                bvh.Remove(needRemove[i]);
             }
             needRemove.Clear();
         }
@@ -98,21 +81,10 @@ namespace TrueSync
             {
                 if (colliders[i].enable && colliders[i].dirty)
                 {
-                    if (spaceType == SpaceType.OCtree)
-                    {
-                        octree.Remove(colliders[i]);
-                        octree.Add(colliders[i], colliders[i].bounds);
-                    }
-                    else if (spaceType == SpaceType.BVH)
-                    {
-                        bvh.MarkForUpdate(colliders[i]);
-                    }
+                    bvh.MarkForUpdate(colliders[i]);
                 }
             }
-            if (spaceType == SpaceType.BVH)
-            {
-                bvh.Optimize();
-            }
+            bvh.Optimize();
         }
 
         private void CollectionsTick()
@@ -125,24 +97,17 @@ namespace TrueSync
                 }
                 if (colliders[i].rigidBody)
                 {
-                    // 从八叉树查找那些潜在的碰撞对象
+                    // 从BVH空间查找那些潜在的碰撞对象
                     PotentialCollision.Clear();
                     PotentialCollisionBVH.Clear();
-                    if (spaceType == SpaceType.OCtree)
+                    bvh.Traverse(colliders[i].bounds, ref PotentialCollisionBVH);
+                    for (int b = 0; b < PotentialCollisionBVH.Count; b++)
                     {
-                        octree.GetColliding(PotentialCollision, colliders[i].bounds);
-                    }
-                    else if (spaceType == SpaceType.BVH)
-                    {
-                        bvh.Traverse(colliders[i].bounds, ref PotentialCollisionBVH);
-                        for (int b = 0; b < PotentialCollisionBVH.Count; b++)
+                        if (PotentialCollisionBVH[b].GObjects != null)
                         {
-                            if (PotentialCollisionBVH[b].GObjects != null)
+                            for (int g = 0; g < PotentialCollisionBVH[b].GObjects.Count; g++)
                             {
-                                for (int g = 0; g < PotentialCollisionBVH[b].GObjects.Count; g++)
-                                {
-                                    PotentialCollision.Add(PotentialCollisionBVH[b].GObjects[g]);
-                                }
+                                PotentialCollision.Add(PotentialCollisionBVH[b].GObjects[g]);
                             }
                         }
                     }

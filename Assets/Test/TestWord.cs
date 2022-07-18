@@ -6,14 +6,20 @@ using System;
 
 public class TestWord : MonoBehaviour
 {
-    World myWorld;
+    public bool showOnGUI;
+    public World myWorld;
 
-    List<BaseCollider> tempColliders = new List<BaseCollider>();
-    Dictionary<GameObject, BaseCollider> tempDic = new Dictionary<GameObject, BaseCollider>();
+    public List<BaseCollider> tempColliders = new List<BaseCollider>();
+    public Dictionary<GameObject, BaseCollider> tempDic = new Dictionary<GameObject, BaseCollider>();
     // Start is called before the first frame update
+    public static TestWord instance;
+    void Awake()
+    {
+        instance = this;
+    }
     void Start()
     {
-        myWorld = new World(20, SpaceType.BVH);
+        myWorld = new World(20);
 
         var objs = Resources.FindObjectsOfTypeAll<GameObject>();
         foreach (var item in objs)
@@ -51,19 +57,19 @@ public class TestWord : MonoBehaviour
         }
     }
 
-    private void OnLeave(object owner, List<BaseCollider> array)
+    public void OnLeave(object owner, List<BaseCollider> array)
     {
         // Debug.LogWarning("碰撞离开" + array.Count);
         GameObject item = owner as GameObject;
         item.GetComponent<Renderer>().material.color = Color.white;
     }
 
-    private void OnStay(object owner, List<BaseCollider> array)
+    public void OnStay(object owner, List<BaseCollider> array)
     {
         //Debug.Log("碰撞停留" + array.Count);
     }
 
-    private void OnEnter(object owner, List<BaseCollider> array)
+    public void OnEnter(object owner, List<BaseCollider> array)
     {
         //Debug.Log("碰撞进入" + array.Count);
         GameObject item = owner as GameObject;
@@ -92,6 +98,7 @@ public class TestWord : MonoBehaviour
                 (c as TrueSync.BoxCollider).center = center;
                 (c as TrueSync.BoxCollider).size = size;
                 (c as TrueSync.BoxCollider).quaternion = qua;
+                c.rigidBody = true;
             }
             if (item.GetComponent<UnityEngine.SphereCollider>() != null)
             {
@@ -100,6 +107,7 @@ public class TestWord : MonoBehaviour
 
                 (c as TrueSync.SphereCollider).center = center;
                 (c as TrueSync.SphereCollider).radius = radius;
+                c.rigidBody = true;
             }
         }
 
@@ -110,32 +118,16 @@ public class TestWord : MonoBehaviour
 
 
     List<BaseCollider> collidingWith = new List<BaseCollider>();
-
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
-        if (myWorld != null && myWorld.octree != null)
-        {
-            myWorld.octree.DrawAllBounds(); // Draw node boundaries
-            myWorld.octree.DrawAllObjects(); // Draw object boundaries
-            myWorld.octree.DrawCollisionChecks(); // 绘制最后一个* numcollisionstosave *碰撞检查边界
-        }
         GameObject select = UnityEditor.Selection.activeGameObject;
-        if (select != null && myWorld != null && myWorld.octree != null && tempDic.ContainsKey(select))
-        {
-            collidingWith.Clear();
-            myWorld.octree.GetColliding(collidingWith, tempDic[select].bounds);
-            foreach (var item in collidingWith)
-            {
-                Gizmos.color = Color.red;
-                Gizmos.DrawWireCube((item.owner as GameObject).transform.position, (item.owner as GameObject).transform.localScale);
-            }
-        }
         if (select != null && tempDic.ContainsKey(select))
         {
             DrawAABB(tempDic[select]);
         }
     }
-
+#endif
     void DrawAABB(BaseCollider c)
     {
         BoxShape box = c.shape as BoxShape;
@@ -180,6 +172,8 @@ public class TestWord : MonoBehaviour
 
     void OnGUI()
     {
+        if (!showOnGUI)
+            return;
         if (GUILayout.Button("创建100个球体 最大范围10M"))
         {
             for (int i = 0; i < 100; i++)

@@ -15,21 +15,14 @@ namespace TrueSync
             PotentialCollisionBVH.Clear();
             colliders.Clear();
             BoxShape box = new BoxShape(center, size, quaternion);
-            if (world.spaceType == SpaceType.OCtree)
+            world.bvh.Traverse(box.ToAABB(), ref PotentialCollisionBVH);
+            for (int b = 0; b < PotentialCollisionBVH.Count; b++)
             {
-                world.octree.GetColliding(PotentialCollision, box.ToAABB());
-            }
-            else if (world.spaceType == SpaceType.BVH)
-            {
-                world.bvh.Traverse(box.ToAABB(), ref PotentialCollisionBVH);
-                for (int b = 0; b < PotentialCollisionBVH.Count; b++)
+                if (PotentialCollisionBVH[b].GObjects != null)
                 {
-                    if (PotentialCollisionBVH[b].GObjects != null)
+                    for (int g = 0; g < PotentialCollisionBVH[b].GObjects.Count; g++)
                     {
-                        for (int g = 0; g < PotentialCollisionBVH[b].GObjects.Count; g++)
-                        {
-                            PotentialCollision.Add(PotentialCollisionBVH[b].GObjects[g]);
-                        }
+                        PotentialCollision.Add(PotentialCollisionBVH[b].GObjects[g]);
                     }
                 }
             }
@@ -50,21 +43,14 @@ namespace TrueSync
             PotentialCollisionBVH.Clear();
             colliders.Clear();
             SphereShape sphere = new SphereShape(center, radius);
-            if (world.spaceType == SpaceType.OCtree)
+            world.bvh.Traverse(sphere.ToAABB(), ref PotentialCollisionBVH);
+            for (int b = 0; b < PotentialCollisionBVH.Count; b++)
             {
-                world.octree.GetColliding(PotentialCollision, sphere.ToAABB());
-            }
-            else if (world.spaceType == SpaceType.BVH)
-            {
-                world.bvh.Traverse(sphere.ToAABB(), ref PotentialCollisionBVH);
-                for (int b = 0; b < PotentialCollisionBVH.Count; b++)
+                if (PotentialCollisionBVH[b].GObjects != null)
                 {
-                    if (PotentialCollisionBVH[b].GObjects != null)
+                    for (int g = 0; g < PotentialCollisionBVH[b].GObjects.Count; g++)
                     {
-                        for (int g = 0; g < PotentialCollisionBVH[b].GObjects.Count; g++)
-                        {
-                            PotentialCollision.Add(PotentialCollisionBVH[b].GObjects[g]);
-                        }
+                        PotentialCollision.Add(PotentialCollisionBVH[b].GObjects[g]);
                     }
                 }
             }
