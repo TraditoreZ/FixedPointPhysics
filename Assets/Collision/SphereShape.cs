@@ -28,6 +28,8 @@ namespace TrueSync
                     return box._OBB.Intersects(_Sphere);
                 case SphereShape sphereShape:
                     return _Sphere.Intersects(sphereShape._Sphere);
+                case CapsuleShape capsuleShape:
+                    return Capsule.Intersects(capsuleShape._Capsule, _Sphere);
             }
             return false;
         }

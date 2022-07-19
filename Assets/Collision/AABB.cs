@@ -109,7 +109,7 @@ namespace TrueSync
 
         public bool Intersects(OBB obb)
         {
-            // 拿到AAB中心点到OBB最近的那个点
+            // 拿到AABB中心点到OBB最近的那个点
             TSVector point = obb.ClosestPointOBB(this.center);
             TSVector v = TSVector.Abs(point - this.center);
             return (v.x <= extents.x && v.y <= extents.y && v.z <= extents.z);
@@ -119,9 +119,14 @@ namespace TrueSync
         {
             // 获取圆中心点到AABB的距离平方
             FP dist2 = SqDistPointAABB(other.c, this);
-            float d = dist2.AsFloat();
-            float f = (other.r * other.r).AsFloat();
             return dist2 <= other.r * other.r;
+        }
+
+        public bool Intersects(Capsule capsule)
+        {
+            var point = capsule.ClosestPointCapsule(this.center);
+            TSVector v = TSVector.Abs(point - this.center);
+            return (v.x <= extents.x && v.y <= extents.y && v.z <= extents.z);
         }
 
         public void SetMinMax(TSVector min, TSVector max)

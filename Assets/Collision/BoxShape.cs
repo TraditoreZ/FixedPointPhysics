@@ -30,6 +30,8 @@ namespace TrueSync
                     return _OBB.Intersects(box._OBB);
                 case SphereShape sphereShape:
                     return _OBB.Intersects(sphereShape._Sphere);
+                case CapsuleShape capsuleShape:
+                    return Capsule.Intersects(capsuleShape._Capsule, _OBB);
             }
             return false;
         }
@@ -39,7 +41,7 @@ namespace TrueSync
             return aabb.Intersects(_OBB);
         }
 
-        private TSVector[] aabbArray = new TSVector[8];
+        private static TSVector[] aabbArray = new TSVector[8];
         public override AABB ToAABB()
         {
             TSVector x = obb.AxisX * obb.extents.x;

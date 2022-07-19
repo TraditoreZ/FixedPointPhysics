@@ -21,6 +21,10 @@ namespace TrueSync
 
         private List<BVHNode<BaseCollider>> PotentialCollisionBVH;
 
+        public World() : this(100)
+        {
+        }
+
         public World(FP worldSize)
         {
             colliders = new List<BaseCollider>(128);
@@ -85,6 +89,12 @@ namespace TrueSync
                 }
             }
             bvh.Optimize();
+            if (bvh.rootBVH.Box.min.x < -worldSize || bvh.rootBVH.Box.min.y < -worldSize || bvh.rootBVH.Box.min.z < -worldSize ||
+                bvh.rootBVH.Box.max.x > worldSize || bvh.rootBVH.Box.max.y > worldSize || bvh.rootBVH.Box.max.z > worldSize)
+            {
+                Debug.Log($"Physics worldSize expand:{worldSize} => {worldSize * 2}");
+                worldSize *= 2;
+            }
         }
 
         private void CollectionsTick()

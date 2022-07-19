@@ -7,9 +7,9 @@ public class RadomMove : MonoBehaviour
     Vector3 point;
     Vector3 targer;
 
-    float range = 5;
+    float range = 10;
 
-    float speed = 0.01f;
+    float speed = 0.5f;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +24,7 @@ public class RadomMove : MonoBehaviour
         {
             targer = RadomTarger();
         }
-        transform.Translate((targer - transform.position).normalized * speed);
+        transform.Translate((targer - transform.position).normalized * speed * Time.deltaTime);
     }
 
     Vector3 RadomTarger()
