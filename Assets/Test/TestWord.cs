@@ -7,6 +7,9 @@ using System;
 public class TestWord : MonoBehaviour
 {
     public bool showOnGUI;
+
+    public bool showBVH;
+
     public World myWorld;
 
     public List<BaseCollider> tempColliders = new List<BaseCollider>();
@@ -204,7 +207,7 @@ public class TestWord : MonoBehaviour
 
     void Update()
     {
-        if (myWorld != null && myWorld.bvh != null)
+        if (myWorld != null && myWorld.bvh != null && showBVH)
         {
             myWorld.bvh.RenderDebug();
         }
@@ -214,9 +217,9 @@ public class TestWord : MonoBehaviour
     {
         if (!showOnGUI)
             return;
-        if (GUILayout.Button("创建10个球体 最大范围10M"))
+        if (GUILayout.Button("创建50个球体 最大范围10M"))
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 50; i++)
             {
                 GameObject item = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 item.transform.position = new Vector3(UnityEngine.Random.Range(-10, 10), UnityEngine.Random.Range(-10, 10), UnityEngine.Random.Range(-10, 10));
@@ -235,9 +238,9 @@ public class TestWord : MonoBehaviour
                 item.AddComponent<RadomMove>();
             }
         }
-        if (GUILayout.Button("创建10个正方体 最大范围10M"))
+        if (GUILayout.Button("创建50个正方体 最大范围10M"))
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 50; i++)
             {
                 GameObject item = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 item.transform.position = new Vector3(UnityEngine.Random.Range(-10, 10), UnityEngine.Random.Range(-10, 10), UnityEngine.Random.Range(-10, 10));
@@ -258,9 +261,9 @@ public class TestWord : MonoBehaviour
                 item.AddComponent<RadomRotate>();
             }
         }
-        if (GUILayout.Button("创建10个胶囊 最大范围10M"))
+        if (GUILayout.Button("创建50个胶囊 最大范围10M"))
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 50; i++)
             {
                 GameObject item = GameObject.CreatePrimitive(PrimitiveType.Capsule);
                 item.transform.position = new Vector3(UnityEngine.Random.Range(-10, 10), UnityEngine.Random.Range(-10, 10), UnityEngine.Random.Range(-10, 10));
