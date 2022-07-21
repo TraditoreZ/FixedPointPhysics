@@ -8,8 +8,6 @@ public class TestWord : MonoBehaviour
 {
     public bool showOnGUI;
 
-    public bool showBVH;
-
     public World myWorld;
 
     public List<BaseCollider> tempColliders = new List<BaseCollider>();
@@ -23,7 +21,7 @@ public class TestWord : MonoBehaviour
     void Start()
     {
         myWorld = new World(20);
-
+        ColliderView.myWorld = myWorld;
         var objs = Resources.FindObjectsOfTypeAll<GameObject>();
         foreach (var item in objs)
         {
@@ -95,7 +93,7 @@ public class TestWord : MonoBehaviour
             if (item.GetComponent<UnityEngine.BoxCollider>() != null)
             {
                 TSVector center = new TSVector(item.transform.position.x, item.transform.position.y, item.transform.position.z);
-                TSVector size = new TSVector(item.GetComponent<UnityEngine.BoxCollider>().size.x, item.GetComponent<UnityEngine.BoxCollider>().size.y, item.GetComponent<UnityEngine.BoxCollider>().size.z);
+                TSVector size = new TSVector(item.GetComponent<UnityEngine.BoxCollider>().size.x * item.transform.localScale.x, item.GetComponent<UnityEngine.BoxCollider>().size.y * item.transform.localScale.y, item.GetComponent<UnityEngine.BoxCollider>().size.z * item.transform.localScale.z);
                 TSQuaternion qua = new TSQuaternion(item.transform.rotation.x, item.transform.rotation.y, item.transform.rotation.z, item.transform.rotation.w);
 
                 (c as TrueSync.BoxCollider).center = center;
@@ -205,13 +203,6 @@ public class TestWord : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        if (myWorld != null && myWorld.bvh != null && showBVH)
-        {
-            myWorld.bvh.RenderDebug();
-        }
-    }
 
     void OnGUI()
     {

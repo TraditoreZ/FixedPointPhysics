@@ -132,10 +132,9 @@ namespace TrueSync
             }
         }
 
-        public int ColliderCount()
+        public int CollisionCount()
         {
-            return colliding.Count;
+            return stayCollider.Count;
         }
-
     }
 }
