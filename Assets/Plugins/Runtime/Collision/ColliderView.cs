@@ -58,6 +58,11 @@ namespace TrueSync
                     SphereShape sphereShape = (SphereShape)collider.shape;
                     Gizmos.DrawWireSphere(sphereShape.center.ToVector3(), sphereShape.radius.AsFloat());
                 }
+                else if (collider.shape is CapsuleShape)
+                {
+                    CapsuleShape capsuleShape = (CapsuleShape)collider.shape;
+                    DrawWireCapsule(capsuleShape.center.ToVector3(), capsuleShape.quaternion.ToQuaternion(), capsuleShape.radius.AsFloat(), capsuleShape.height.AsFloat());
+                }
             }
         }
 
@@ -69,7 +74,7 @@ namespace TrueSync
                 Gizmos.DrawWireCube(collider.bounds.center.ToVector3(), collider.bounds.size.ToVector3());
             }
         }
-        
+
         static List<Matrix4x4> debugMatricies = new List<Matrix4x4>();
         private void DrawBVH()
         {
@@ -117,7 +122,34 @@ namespace TrueSync
             Gizmos.DrawLine(p3, p5);
             Gizmos.DrawLine(p6, p8);
         }
+        private void DrawWireCapsule(Vector3 center, Quaternion rotation, float radius, float height)
+        {
+            Vector3 AxisX = rotation * Vector3.right;
+            Vector3 AxisY = rotation * Vector3.up;
+            Vector3 AxisZ = rotation * Vector3.forward;
+            float s = Mathf.Max(height * .5f - radius, 0);
 
+            Vector3 x = AxisX * radius;
+            Vector3 y = AxisY * s;
+            Vector3 z = AxisZ * radius;
+
+            Vector3 p1 = center + x + y;
+            Vector3 p2 = center - x + y;
+            Vector3 p4 = center + y + z;
+            Vector3 p7 = center + y - z;
+
+            Vector3 p3 = center + x - y;
+            Vector3 p5 = center - x - y;
+            Vector3 p6 = center - y + z;
+            Vector3 p8 = center - y - z;
+
+            Gizmos.DrawWireSphere(center + AxisY * s, radius);
+            Gizmos.DrawWireSphere(center - AxisY * s, radius);
+            Gizmos.DrawLine(p1, p3);
+            Gizmos.DrawLine(p2, p5);
+            Gizmos.DrawLine(p4, p6);
+            Gizmos.DrawLine(p7, p8);
+        }
 #endif
     }
 }
