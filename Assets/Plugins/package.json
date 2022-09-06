@@ -2,7 +2,7 @@
   "name": "com.ez.truesync-physics",
   "displayName": "truesync-physics",
   "author": { "name": "zhaoenze", "url": "https://github.com/TraditoreZ" },
-  "version": "0.0.1",
+  "version": "0.0.2",
   "unity": "2018.4",
   "description": "trueSync physics and collisions",
   "license": "MIT",
