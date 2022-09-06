@@ -13,7 +13,9 @@ namespace TrueSync
         public bool enable { get; set; }
         public bool dirty { get; protected set; }
         public object owner { get; set; }
-        public int layer { get; set; }
+        /// <summary>层级 最大支持到32</summary>
+        public byte layer;
+        public int layerCollisionMatrix { get; private set; }
         /// <summary>刚体:  两个物体发生碰撞必须其中一个为刚体</summary>
         public bool rigidBody { get; set; }
 
@@ -135,6 +137,11 @@ namespace TrueSync
         public int CollisionCount()
         {
             return stayCollider.Count;
+        }
+
+        public void SetLayerCollisionMatrix(int value)
+        {
+            layerCollisionMatrix = value;
         }
     }
 }

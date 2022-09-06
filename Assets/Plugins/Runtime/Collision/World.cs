@@ -21,9 +21,6 @@ namespace TrueSync
 
         private List<BVHNode<BaseCollider>> PotentialCollisionBVH;
 
-        public World() : this(100)
-        {
-        }
 
         public World(FP worldSize)
         {
@@ -33,6 +30,7 @@ namespace TrueSync
             needRemove = new List<BaseCollider>();
             this.worldSize = worldSize;
             bvh = new BVH<BaseCollider>(new BVHBaseColliderAdapter(), colliders);
+            InitDefaultLayerCollisionMatrix();
         }
 
 
@@ -45,6 +43,12 @@ namespace TrueSync
             }
             colliders.Add(collider);
             bvh.Add(collider);
+            if (collider.layer > 32)
+            {
+                Debug.LogError("collider layer > 32;  owner:" + collider.owner.ToString());
+                return false;
+            }
+            collider.SetLayerCollisionMatrix(CollisionLayer.layerCollisionMatrix[collider.layer]);
             return true;
         }
 
@@ -125,8 +129,7 @@ namespace TrueSync
                     // 与潜在对象做碰撞检测
                     for (int k = 0; k < PotentialCollision.Count; k++)
                     {
-                        // TODO 临时写一个同层不检测 到时候应该根据碰撞层级去拆分
-                        if (colliders[i].layer != 0 && colliders[i].layer == PotentialCollision[k].layer)
+                        if (CollisionLayer.GetLayerByMatrix(colliders[i].layerCollisionMatrix, PotentialCollision[k].layer) == false)
                             continue;
                         if (colliders[i].owner != PotentialCollision[k].owner && PotentialCollision[k].enable &&
                          colliders[i].bounds.Intersects(PotentialCollision[k].bounds) &&
@@ -162,6 +165,12 @@ namespace TrueSync
             {
                 target.GetCollidingList().Add(self);
             }
+        }
+
+
+        private void InitDefaultLayerCollisionMatrix()
+        {
+            CollisionLayer.SetLayer(0, 0, true);
         }
 
     }
