@@ -6,8 +6,8 @@ namespace TrueSync
         {
             m_center = center;
             m_size = size;
-            m_min = new TSVector(center.x - size.x * 0.5f, center.y - size.y * 0.5f, center.z - size.z * 0.5f);
-            m_max = new TSVector(center.x + size.x * 0.5f, center.y + size.y * 0.5f, center.z + size.z * 0.5f);
+            m_min = new TSVector(center.x - size.x * FP.Half, center.y - size.y * FP.Half, center.z - size.z * FP.Half);
+            m_max = new TSVector(center.x + size.x * FP.Half, center.y + size.y * FP.Half, center.z + size.z * FP.Half);
         }
 
         private TSVector m_min;
@@ -56,7 +56,7 @@ namespace TrueSync
         //The extents of the Bounding Box. This is always half of the size of the AABB.
         public TSVector extents
         {
-            get { return size * 0.5f; }
+            get { return size * FP.Half; }
             set { m_size = value * 2; }
         }
 
@@ -133,7 +133,7 @@ namespace TrueSync
         {
             m_min = min;
             m_max = max;
-            m_center = (min + max) * 0.5f;
+            m_center = (min + max) * FP.Half;
             m_size = TSVector.Abs(min - max);
         }
 

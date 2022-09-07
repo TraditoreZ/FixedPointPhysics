@@ -86,10 +86,10 @@ namespace TrueSync
 
         public static bool Intersects(Capsule a, Capsule b)
         {
-            TSVector startA = a.center + a.AxisY * ((a.height) * FP.HALF - a.radius);
-            TSVector endA = a.center - a.AxisY * ((a.height) * FP.HALF - a.radius);
-            TSVector startB = b.center + b.AxisY * ((b.height) * FP.HALF - b.radius);
-            TSVector endB = b.center - b.AxisY * ((b.height) * FP.HALF - b.radius);
+            TSVector startA = a.center + a.AxisY * ((a.height) * FP.Half - a.radius);
+            TSVector endA = a.center - a.AxisY * ((a.height) * FP.Half - a.radius);
+            TSVector startB = b.center + b.AxisY * ((b.height) * FP.Half - b.radius);
+            TSVector endB = b.center - b.AxisY * ((b.height) * FP.Half - b.radius);
             return sqDistSegmentToSegment(startA, endA, startB, endB) <= (a.radius + b.radius) * (a.radius + b.radius);
         }
 
@@ -108,8 +108,8 @@ namespace TrueSync
         {
             if (height <= radius * 2)
                 return TSVector.Distance(center, p);
-            TSVector start = center + AxisY * ((height) * FP.HALF - radius);
-            TSVector end = center - AxisY * ((height) * FP.HALF - radius);
+            TSVector start = center + AxisY * ((height) * FP.Half - radius);
+            TSVector end = center - AxisY * ((height) * FP.Half - radius);
             FP cross = (end.x - start.x) * (p.x - start.x) + (end.y - start.y) * (p.y - start.y) + (end.z - start.z) * (p.z - start.z);
             if (cross <= 0)
                 return (p.x - start.x) * (p.x - start.x) + (p.y - start.y) * (p.y - start.y) + (p.z - start.z) * (p.z - start.z);
@@ -132,8 +132,8 @@ namespace TrueSync
         {
             if (height <= radius * 2)
                 return center;
-            TSVector start = center + AxisY * ((height) * FP.HALF - radius);
-            TSVector end = center - AxisY * ((height) * FP.HALF - radius);
+            TSVector start = center + AxisY * ((height) * FP.Half - radius);
+            TSVector end = center - AxisY * ((height) * FP.Half - radius);
             FP cross = (end.x - start.x) * (p.x - start.x) + (end.y - start.y) * (p.y - start.y) + (end.z - start.z) * (p.z - start.z);
             if (cross <= 0)
                 return start + (p - start).normalized * radius;
