@@ -233,9 +233,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02d4144e014bd1a43a5a34a554c5b4e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drawCollisions: 1
-  drawAABB: 1
-  drawBVH: 1
+  drawCollisions: 0
+  drawAABB: 0
+  drawBVH: 0
 --- !u!1 &575134894
 GameObject:
   m_ObjectHideFlags: 0

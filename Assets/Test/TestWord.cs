@@ -99,7 +99,6 @@ public class TestWord : MonoBehaviour
                 (c as TrueSync.BoxCollider).center = center;
                 (c as TrueSync.BoxCollider).size = size;
                 (c as TrueSync.BoxCollider).quaternion = qua;
-                c.rigidBody = true;
             }
             if (item.GetComponent<UnityEngine.SphereCollider>() != null)
             {
@@ -108,7 +107,6 @@ public class TestWord : MonoBehaviour
 
                 (c as TrueSync.SphereCollider).center = center;
                 (c as TrueSync.SphereCollider).radius = radius;
-                c.rigidBody = true;
             }
             if (item.GetComponent<UnityEngine.CapsuleCollider>() != null)
             {
@@ -120,7 +118,6 @@ public class TestWord : MonoBehaviour
                 (c as TrueSync.CapsuleCollider).radius = radius;
                 (c as TrueSync.CapsuleCollider).height = height;
                 (c as TrueSync.CapsuleCollider).quaternion = qua;
-                c.rigidBody = true;
             }
         }
 
@@ -219,7 +216,6 @@ public class TestWord : MonoBehaviour
                 FP radius = (FP)(item.GetComponent<UnityEngine.SphereCollider>().radius);
                 TrueSync.SphereCollider sc = new TrueSync.SphereCollider(center, radius);
                 sc.owner = item;
-                sc.rigidBody = true;
                 myWorld.AddCollider(sc);
                 tempDic.Add(item, sc);
                 sc.OnEnterEvent += OnEnter;
@@ -241,7 +237,6 @@ public class TestWord : MonoBehaviour
                 TSQuaternion qua = new TSQuaternion(item.transform.rotation.x, item.transform.rotation.y, item.transform.rotation.z, item.transform.rotation.w);
                 TrueSync.BoxCollider bc = new TrueSync.BoxCollider(center, size, qua);
                 bc.owner = item;
-                bc.rigidBody = true;
                 myWorld.AddCollider(bc);
                 tempDic.Add(item, bc);
                 bc.OnEnterEvent += OnEnter;
@@ -262,7 +257,6 @@ public class TestWord : MonoBehaviour
                 TSQuaternion qua = new TSQuaternion(item.transform.rotation.x, item.transform.rotation.y, item.transform.rotation.z, item.transform.rotation.w);
                 TrueSync.CapsuleCollider bc = new TrueSync.CapsuleCollider(center, item.GetComponent<UnityEngine.CapsuleCollider>().radius, item.GetComponent<UnityEngine.CapsuleCollider>().height, qua);
                 bc.owner = item;
-                bc.rigidBody = true;
                 myWorld.AddCollider(bc);
                 tempDic.Add(item, bc);
                 bc.OnEnterEvent += OnEnter;
@@ -284,7 +278,6 @@ public class TestWord : MonoBehaviour
                 FP radius = (FP)(item.GetComponent<UnityEngine.SphereCollider>().radius);
                 TrueSync.SphereCollider sc = new TrueSync.SphereCollider(center, radius);
                 sc.owner = item;
-                sc.rigidBody = true;
                 myWorld.AddCollider(sc);
                 tempDic.Add(item, sc);
                 sc.OnEnterEvent += OnEnter;
@@ -306,7 +299,6 @@ public class TestWord : MonoBehaviour
                 TSQuaternion qua = new TSQuaternion(item.transform.rotation.x, item.transform.rotation.y, item.transform.rotation.z, item.transform.rotation.w);
                 TrueSync.BoxCollider bc = new TrueSync.BoxCollider(center, size, qua);
                 bc.owner = item;
-                bc.rigidBody = true;
                 myWorld.AddCollider(bc);
                 tempDic.Add(item, bc);
                 bc.OnEnterEvent += OnEnter;
@@ -327,7 +319,6 @@ public class TestWord : MonoBehaviour
                 TSQuaternion qua = new TSQuaternion(item.transform.rotation.x, item.transform.rotation.y, item.transform.rotation.z, item.transform.rotation.w);
                 TrueSync.CapsuleCollider bc = new TrueSync.CapsuleCollider(center, item.GetComponent<UnityEngine.CapsuleCollider>().radius, item.GetComponent<UnityEngine.CapsuleCollider>().height, qua);
                 bc.owner = item;
-                bc.rigidBody = true;
                 myWorld.AddCollider(bc);
                 tempDic.Add(item, bc);
                 bc.OnEnterEvent += OnEnter;
@@ -350,7 +341,6 @@ public class TestWord : MonoBehaviour
                 TSVector size = new TSVector(item.GetComponent<UnityEngine.BoxCollider>().size.x * item.transform.localScale.x, item.GetComponent<UnityEngine.BoxCollider>().size.y * item.transform.localScale.y, item.GetComponent<UnityEngine.BoxCollider>().size.z * item.transform.localScale.z);
                 TSQuaternion qua = new TSQuaternion(item.transform.rotation.x, item.transform.rotation.y, item.transform.rotation.z, item.transform.rotation.w);
                 TrueSync.BoxCollider bc = new TrueSync.BoxCollider(center, size, qua);
-                bc.rigidBody = true;
                 bc.owner = item;
                 myWorld.AddCollider(bc);
                 tempDic.Add(item, bc);

@@ -16,8 +16,8 @@ namespace TrueSync
         /// <summary>层级 最大支持到32</summary>
         public byte layer;
         public int layerCollisionMatrix { get; private set; }
-        /// <summary>刚体:  两个物体发生碰撞必须其中一个为刚体</summary>
-        public bool rigidBody { get; set; }
+        /// <summary>静止的碰撞 不会发生位置形变</summary>
+        public bool isStatic { get; set; }
 
         public Shape shape { get; protected set; }
 

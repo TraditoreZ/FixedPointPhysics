@@ -35,7 +35,6 @@ public class BulletManager : MonoBehaviour
         TSQuaternion qua = new TSQuaternion(go.transform.rotation.x, go.transform.rotation.y, go.transform.rotation.z, go.transform.rotation.w);
         TrueSync.BoxCollider bc = new TrueSync.BoxCollider(center, size, qua);
         bc.owner = go;
-        bc.rigidBody = true;
         TestWord.instance.myWorld.AddCollider(bc);
         TestWord.instance.tempDic.Add(go, bc);
         bc.OnEnterEvent += TestWord.instance.OnEnter;

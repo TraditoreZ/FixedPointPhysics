@@ -109,7 +109,7 @@ namespace TrueSync
                 {
                     continue;
                 }
-                if (colliders[i].rigidBody)
+                if (colliders[i].isStatic == false)
                 {
                     // 从BVH空间查找那些潜在的碰撞对象
                     PotentialCollision.Clear();
@@ -127,6 +127,7 @@ namespace TrueSync
                     }
 
                     // 与潜在对象做碰撞检测
+                    //TODO 这里未来可以使用JobSystem
                     for (int k = 0; k < PotentialCollision.Count; k++)
                     {
                         if (CollisionLayer.GetLayerByMatrix(colliders[i].layerCollisionMatrix, PotentialCollision[k].layer) == false)
