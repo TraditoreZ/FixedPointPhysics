@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace TrueSync.Behaviour
 {
-    public class BoxColliderTS : BaseColliderTS
+    public class BoxColliderFixed : BaseColliderFixed
     {
         public Vector3 size = Vector3.one;
 

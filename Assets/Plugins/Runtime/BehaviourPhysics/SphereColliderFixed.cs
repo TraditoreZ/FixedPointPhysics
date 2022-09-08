@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace TrueSync.Behaviour
 {
-    public class SphereColliderTS : BaseColliderTS
+    public class SphereColliderFixed : BaseColliderFixed
     {
         public float radius = 0.5f;
 

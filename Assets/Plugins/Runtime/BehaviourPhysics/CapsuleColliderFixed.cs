@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace TrueSync.Behaviour
 {
-    public class CapsuleColliderTS : BaseColliderTS
+    public class CapsuleColliderFixed : BaseColliderFixed
     {
         public float radius = 0.5f;
 

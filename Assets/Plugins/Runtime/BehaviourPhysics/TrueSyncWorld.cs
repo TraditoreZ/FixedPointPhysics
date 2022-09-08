@@ -14,7 +14,7 @@ namespace TrueSync.Behaviour
             {
                 if (instance == null)
                 {
-                    GameObject go = new GameObject("_TrueSyncWorld");
+                    GameObject go = new GameObject("_PhysicWorld");
                     instance = go.AddComponent<TrueSyncWorld>();
                 }
                 return instance;

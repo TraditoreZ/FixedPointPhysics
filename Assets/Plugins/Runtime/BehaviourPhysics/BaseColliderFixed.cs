@@ -5,7 +5,7 @@ using UnityEngine;
 namespace TrueSync.Behaviour
 {
     [DefaultExecutionOrder(100)]
-    public abstract class BaseColliderTS : MonoBehaviour
+    public abstract class BaseColliderFixed : MonoBehaviour
     {
 
         public Vector3 center;
