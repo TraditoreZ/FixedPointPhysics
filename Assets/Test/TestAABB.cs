@@ -35,7 +35,6 @@ public class TestAABB : MonoBehaviour
         }
         lastA = aaa;
         lastB = bbb;
-        Debug.Log("发生变化,开始检测");
         if (aaa.Intersects(bbb))
         {
             Debug.Log("AABB 相交");

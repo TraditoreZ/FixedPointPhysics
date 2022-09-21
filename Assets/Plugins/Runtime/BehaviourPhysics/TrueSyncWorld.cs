@@ -34,6 +34,7 @@ namespace TrueSync.Behaviour
             }
             instance = this;
             myWorld = new World(initialWorldSize >= 0 ? initialWorldSize : 10);
+            ColliderView.myWorld = myWorld;
             DontDestroyOnLoad(gameObject);
         }
 

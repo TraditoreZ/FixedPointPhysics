@@ -75,11 +75,6 @@ namespace TrueSync
             var aabb = new AABB();
             aabb.SetMinMax(new TSVector(minX, minY, minZ), new TSVector(maxX, maxY, maxZ));
             return aabb;
-
-            // 这里并非是一个精准的AABB包围盒 但是算的比较快mm 
-            // FP p = size.x > size.y ? size.x : size.y;
-            // p = p > size.z ? p : size.z;
-            // return new AABB(center, TSVector.one * p);
         }
     }
 }
